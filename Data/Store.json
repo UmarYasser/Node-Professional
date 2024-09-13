@@ -1,0 +1,38 @@
+[
+    {
+        "id": 1,
+        "name": "Samsung Galaxy S21",
+        "model_name": "Sumsung Phone",
+        "model_number": "AKFD45NL/A",
+        "size": "6.2 inches",
+        "camera": "12MP Rear | 7MP Front",
+        "price": 799.99,
+        "color": "Black",
+        "image": "img/iphone.PNG",
+        "ROM": "128GB"
+    },
+    {
+        "id": 2,
+        "name": "Samsung Galaxy A30",
+        "model_name": "Sumsung Phone",
+        "model_number": "AKFD45NL/A",
+        "size": "6.7 inches",
+        "camera": "18MP Rear | 9MP Front",
+        "price": 899.99,
+        "color": "Red",
+        "image": "../img/iphone.PNG",
+        "ROM": "512GB"
+    },
+    {
+        "id": 3,
+        "name": "Sony Xepria 8",
+        "model_name": "Sony Phone",
+        "model_number": "AKFD45NL/A",
+        "size": "6.0 inches",
+        "camera": "10MP Rear | 5MP Front",
+        "price": 749.99,
+        "color": "Cyan",
+        "image": "../img/iphone.PNG",
+        "ROM": "256GB"
+    }
+]
