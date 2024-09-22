@@ -1,0 +1,12 @@
+{
+    "name": "sturdy rotary-phone",
+    "forwardPorts": [3000],  // List your ports here (e.g., 3000)
+    "portsAttributes": {
+      "3000": {
+        "label": "Web Server",
+        "onAutoForward": "notify",
+        "visibility": "public"  // Set port visibility to public
+      }
+    }
+}
+  

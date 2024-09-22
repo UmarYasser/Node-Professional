@@ -28,7 +28,7 @@ const getAllMovies =asyncErHandler(async(req, res,next) =>{
 const getMovie = asyncErHandler( async(req,res,next)=>{
   let features  = new ApiFeatures(Movie.findById(req.params.id),req.query).filter().fields()
   
-  const movie = await Movie.findById(req.params.id)
+  const movie = await features.query
   if(!movie){
     const err = new CustomError('No Movie with that ID was found',404)
     return next(err)
@@ -40,8 +40,8 @@ const getMovie = asyncErHandler( async(req,res,next)=>{
       movie
     }
     })
-
 })
+
 const addMovie = asyncErHandler( async(req,res,next)=>{
   const addedMovie = await Movie.create(req.body)
     res.status(201).json({
@@ -51,6 +51,7 @@ const addMovie = asyncErHandler( async(req,res,next)=>{
       }
     }) 
 })
+
 const updateMovie = asyncErHandler( async(req,res,next) =>{
     const updatedMovie = await Movie.findByIdAndUpdate(req.params.id,req.body,{new:true,runValidators:true});
 
@@ -64,11 +65,14 @@ const updateMovie = asyncErHandler( async(req,res,next) =>{
       }
     })
 })
+
 const deleteMovie = asyncErHandler (async(req,res,next)=>{
    const deletedMovie = await Movie.findByIdAndDelete(req.params.id);   
     if(!deletedMovie){
+      console.log(`Can't find movie with ID ${req.params.id}`)
       return next(new CustomError('No Moive with that ID was found',404))
     }  
+    console.log('Movie Deleted!')
   res.status(200).json({
     status:'success',
     data: null
@@ -95,7 +99,6 @@ const getStats = asyncErHandler( async(req,res) =>{
       stats
   }
 })
-
 })
 const getGenre = asyncErHandler( async(req,res) => {
   const genre = req.params.genre;
@@ -120,7 +123,6 @@ const getGenre = asyncErHandler( async(req,res) => {
     })
 
 })
-
 
 module.exports = {
   highestRated,

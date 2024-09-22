@@ -1,5 +1,7 @@
 const CustomError = require('./../Utils/CustomError')
 const devEr = (res,err)=>{
+  console.log(err.name,err.stack)
+  
      res.status(err.statusCode).json({
        status:err.status,
        message:err.message,
@@ -29,6 +31,7 @@ const CastErHandler = (err) =>{
   return new CustomError(msg,400)
 }
 const DuplicateErHandler = (err) =>{
+  
   const msg = `The Movie with the name '${err.errorResponse.keyValue.name}' has a duplicate`
   return new CustomError(msg,400);
 } 
@@ -38,17 +41,27 @@ const ValidationErHandler = (err) =>{
   console.log(eMsg);
   return new CustomError(eMsg,401)
 }
-   
+const ExpiredTokenHandler = (err) =>{
+  const msg = 'Log In again please, Token/Session Expired'
+  return new CustomError(msg,401);
+}
+const jwtErHandler =(err) => {
+  return new CustomError('Incorrect Token, Good Luck Next Time!',401);
+}
+
 exports.NormalErrors = (err,req,res,next) =>{
-   err.statusCode= err.statusCode || 500;
-   err.status = err.status || 'error';
+  console.log("Normal Errors fn!");
+  err.statusCode= err.statusCode || 500;
+  err.status = err.status || 'error';
   if(process.env.NODE_ENV === 'development'){
     devEr(res,err)
   }else if(process.env.NODE_ENV === 'production'){
     if(err.name === 'CastError'){  err = CastErHandler(err)  }
-    console.log(err.code); 
-    if(err.code === 11000){  err = DuplicateErHandler(err)  }
-    if(err.name === 'ValidationError'){  err = ValidationErHandler(err) }
+    else if(err.code === 11000){  err = DuplicateErHandler(err)  }
+    else if(err.name === 'ValidationError'){  err = ValidationErHandler(err) }
+    else if(err.name === 'TokenExpiredError'){ err = ExpiredTokenHandler(err) }  
+    else if(err.name === 'JsonWebTokenError'){ err = jwtErHandler(err) }  
+
     prodEr(res,err)
   }  
   //Makes a Jsend with setting the error statuses

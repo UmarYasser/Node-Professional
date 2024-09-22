@@ -7,10 +7,19 @@ const Movie = require('./Models/movieModel');
 const app = require('./index');
 mongoose.connect(process.env.CONN_STR)
 .then( ()=> {console.log('Connection Established with MongoDB Atlas')})
-.catch(err =>{ console.log('Error: ' + err.message)});
+
 
 //Server Listening  
 const Port = process.env.PORT || 3500;
-app.listen(Port, () => {
+const server = app.listen(Port, () => {
     console.log(`-------------------\nServer running on Port: ${Port}`);
+})
+  
+process.on('unhandledRejection',(err) =>{
+  console.log(err.name,err.message)
+  console.log('Unhandled Rejection Detected! Self-destructing now...');
+  server.close( () =>{
+    process.exit(1);
+  })
+
 })
