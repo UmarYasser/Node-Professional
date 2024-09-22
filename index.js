@@ -53,7 +53,7 @@ const limiter = rateLimit({
   windowMs:100000,
   handler: function (req, res) {
     res.status(429).json({
-      error: 'كفاية كدا يا كسمك.'
+      error: 'Too Many Requests, try again later.'
     });
   }
 })
